@@ -6,11 +6,9 @@ RUN apt-get -y install python3-pip libpq-dev
 RUN pip3 install psycopg2
 RUN pip3 install Django==1.7.4
 
-RUN django-admin startproject hello
-
-EXPOSE 6502
+EXPOSE 9080
 
 ADD profile /profile
+ADD app /app
 
-ENTRYPOINT ["python3"]
-CMD ["hello/manage.py", "runserver", "0.0.0.0:6502"]
+CMD python3 /app/manage.py migrate && python3 /app/manage.py runserver 0.0.0.0:9080
